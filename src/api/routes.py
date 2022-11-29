@@ -47,7 +47,29 @@ def protected():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
     
-    return jsonify({"msg": "ok"}), 200    
+    return jsonify({"msg": "ok"}), 200
+
+@api.route("/signup", methods=["POST"])
+def register_user():
+
+    email=request.json.get("email")
+    password=request.json.get("password")
+    is_active=True
+
+    user_exists = User.query.filter_by(email=email).first() is not None
+
+    if user_exists:
+        return jsonify({"Error": "User already exists"})
+
+    new_user = User(email=email, password=password, is_active=is_active)    
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({
+        "id": new_user.id,
+        "email": new_user.email
+    })        
 
 # @api.route("/hello", methods=["GET"])
 # @jwt_required()
