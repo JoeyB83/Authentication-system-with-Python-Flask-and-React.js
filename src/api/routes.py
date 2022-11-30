@@ -52,8 +52,8 @@ def protected():
 @api.route("/signup", methods=["POST"])
 def register_user():
 
-    email=request.json.get("email")
-    password=request.json.get("password")
+    email=request.json.get("email", None)
+    password=request.json.get("password", None)
     is_active=True
 
     user_exists = User.query.filter_by(email=email).first() is not None

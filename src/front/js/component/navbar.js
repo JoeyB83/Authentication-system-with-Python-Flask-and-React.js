@@ -4,6 +4,12 @@ import { Context } from "../store/appContext";
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context)
+
+	const handleClick = (e) => {
+		e.preventDefault();
+		actions.logout(token)		
+	};
+
 	return (
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
@@ -15,7 +21,10 @@ export const Navbar = () => {
 					<Link to="/signup">
 						<button className="btn btn-primary">Sign Up</button>
 					</Link>
-					:""				
+					:
+					<Link to="/">
+						<button onClick={handleClick} className="btn btn-primary">Log out</button>
+					</Link>				
 					}
 				</div>
 				{/* <div className="ml-auto">

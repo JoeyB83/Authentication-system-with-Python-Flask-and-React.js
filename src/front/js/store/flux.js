@@ -45,7 +45,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.then((res) => res.ok ? setStore({verifieUser: true}):"")
 				.catch((err) => console.log(err));
-			}
+			},
 			// exampleFunction: () => {
 			// 	getActions().changeColor(0, "green");
 			// },
@@ -56,11 +56,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 	if (token && token!="" && token != undefined) setStore({ token: token});
 			// },
 
-			// logout: () => {
-			// 	sessionStorage.removeItem("token");
-			// 	console.log("Login out")
-			// 	setStore({ token: null});
-			// },
+			logout: () => {
+				// sessionStorage.removeItem("token");
+				console.log("Login out")
+				setStore({ token: null});
+			},
 
 			// login: async (email, password) => {
 			// 	const opts = {
