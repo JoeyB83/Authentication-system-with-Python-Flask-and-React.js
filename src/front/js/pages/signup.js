@@ -5,12 +5,18 @@ import { Context } from "../store/appContext";
 
 export const SignUp = () => {
   const { store, actions } = useContext(Context);
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [userActive, setUserActive] = useState(false);
   const navigate = useNavigate();
 
   console.log(userActive);
+
+  const handleClick = (e) => {
+		e.preventDefault();
+		actions.createUser(email, password, userActive)
+    navigate("/")		
+	};
 
   return (
     <div className="container">
@@ -24,8 +30,8 @@ export const SignUp = () => {
             className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
-            onChange={(e) => setUserEmail(e.target.value)}
-            value={userEmail}
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
           />
           <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
@@ -39,8 +45,8 @@ export const SignUp = () => {
             type="password"
             className="form-control"
             id="exampleInputPassword1"
-            onChange={(e) => setUserPassword(e.target.value)}
-            value={userPassword}
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
         </div>
         <div className="mb-3 form-check">
@@ -56,10 +62,7 @@ export const SignUp = () => {
           </label>
         </div>
         <button type="submit" className="btn btn-primary" 
-          onClick={(e) => {
-              e.preventDefault();
-              navigate("/");
-            }}>
+          onClick={handleClick}>
           Submit
         </button>
       </form>

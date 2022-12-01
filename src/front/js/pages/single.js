@@ -1,16 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 
 export const Single = props => {
 	const { store, actions } = useContext(Context);
+	const navigate = useNavigate();
 	// const params = useParams();
 
 	return (
 		<div className="jumbotron">
-			<h1>Aunthenticaded</h1>			
+		{store.token && store.token!="" && store.token!=undefined ? (
+				<h1>Aunthenticaded</h1>			
+				):(
+					navigate("/")
+		)}
 		</div>
 	);
 };

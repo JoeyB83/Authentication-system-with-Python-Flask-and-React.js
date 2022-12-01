@@ -11,19 +11,23 @@ export const Login = () => {
 	
 	console.log("This is your token", store.token)
 
-	useEffect(() => {
-		actions.getVerified();
-	},[store.token])
+	if (store.token != null){
+		// useEffect(() => {
+			actions.getVerified();
+		// },[store.token])
+	}
 
 	useEffect(() => {
-		if(store.verifieUser){
-			navigate("/single")
-		}
+		if(store.verifieUser === true){
+			navigate("/private")
+		}				
 	},[store.verifieUser])
 
+	console.log("verifier User:", store.verifieUser)
+
 	const handleClick = (e) => {
-		e.preventDefault();
-		actions.getToken(email, password)		
+		e.preventDefault();		
+		actions.getToken(email, password);		
 	};
 	
 	// if (store.token && store.token!="" && store.token != undefined) navigate("/");

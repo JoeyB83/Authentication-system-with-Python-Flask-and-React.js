@@ -31,7 +31,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					redirect: "follow"
 				})
 				.then(response => response.json())
-				.then(result => {setStore({token: result.token})})
+				.then(result => {
+					sessionStorage.setItem("token", result.token)
+					setStore({token: result.token})})
 				.catch(err => console.log(err));
 			},
 
@@ -46,20 +48,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then((res) => res.ok ? setStore({verifieUser: true}):"")
 				.catch((err) => console.log(err));
 			},
+
+			createUser: (email, password, is_active) => {
+				fetch(process.env.BACKEND_URL + '/api/signup',{
+					method: 'POST',
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						email: email,
+						password: password,
+						is_active: is_active
+					}),
+					redirect: "follow"
+				})
+				.then(response => response.json())
+				.then(data=>{console.log('Succes: ',data)})
+				.catch(err => console.log(err));
+			},
 			// exampleFunction: () => {
 			// 	getActions().changeColor(0, "green");
 			// },
 
-			// syncTokenFromSessionStore: () => {
-			// 	const token = sessionStorage.getItem("token");
-			// 	console.log("Aplication just loaded, synching the session storage token")
-			// 	if (token && token!="" && token != undefined) setStore({ token: token});
-			// },
+			syncTokenFromSessionStore: () => {
+				const token = sessionStorage.getItem("token");
+				console.log("Aplication just loaded, synching the session storage token")
+				if (token && token!="" && token != undefined) setStore({ token: token});
+			},
 
 			logout: () => {
-				// sessionStorage.removeItem("token");
+				sessionStorage.removeItem("token");
 				console.log("Login out")
 				setStore({ token: null});
+				setStore({verifieUser: false})				
 			},
 
 			// login: async (email, password) => {
